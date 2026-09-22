@@ -80,7 +80,7 @@ function App() {
   useEffect(() => {
     async function loadDatasets() {
       try {
-        const response = await fetch('http://localhost:8000/api/datasets')
+        const response = await fetch('https://eda-analyzer-ikhg.onrender.com/api/datasets')
         const payload = await response.json() as DatasetListResponse | { detail?: string }
         if (!response.ok) throw new Error('detail' in payload && payload.detail ? payload.detail : 'Dataset history could not be loaded.')
         setDatasets((payload as DatasetListResponse).datasets)
@@ -100,7 +100,7 @@ function App() {
     setMessages((current) => [...current, { role: 'user', text: trimmed }])
     setAssistantLoading(true)
     try {
-      const response = await fetch('http://localhost:8000/api/assistant/messages', {
+      const response = await fetch('https://eda-analyzer-ikhg.onrender.com/api/assistant/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -137,7 +137,7 @@ function App() {
     formData.append('file', file)
 
     try {
-      const response = await fetch('http://localhost:8000/api/datasets/upload', {
+      const response = await fetch('https://eda-analyzer-ikhg.onrender.com/api/datasets/upload', {
         method: 'POST',
         body: formData,
       })
@@ -168,7 +168,7 @@ function App() {
     setGeneratingPlot(true)
     setPlotError(null)
     try {
-      const response = await fetch(`http://localhost:8000/api/datasets/${uploadedDataset.dataset_id}/data`)
+      const response = await fetch(`https://eda-analyzer-ikhg.onrender.com/api/datasets/${uploadedDataset.dataset_id}/data`)
       const payload = await response.json() as DatasetDataResponse | { detail?: string }
       if (!response.ok) throw new Error('detail' in payload && payload.detail ? payload.detail : 'The graph data could not be loaded.')
       setPlotData(payload as DatasetDataResponse)
